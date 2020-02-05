@@ -1,3 +1,4 @@
+# A class representing a Pokemon
 class Pokemon:
   def __init__(self, name, level, poke_type, health, is_knocked_out):
     self.name = name

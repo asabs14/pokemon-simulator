@@ -1,3 +1,4 @@
+# A class representing a Trainer having at most 6 pokemon (this is a game limitation, not a code limitation)
 class Trainer:
   def __init__(self, name, pokemons, potion_cnt, active_pokemon_index=0):
     self.name = name
@@ -26,14 +27,16 @@ class Trainer:
     self.pokemons[self.active_pokemon_index].gain_health(20)
     print("{} potions remaining".format(self.potion_cnt))
 
+  # Attack another Trainer's active pokemon with this Trainer's active pokemon
   def attack_trainer(self, other):
     self_index = self.active_pokemon_index
     other_index = other.active_pokemon_index
     self.pokemons[self_index].attack(other.pokemons[other_index])
     if other.pokemons[other_index].is_knocked_out:
       other.active_pokemon_index = 0
+      print("Checking for next available pokemon...")
       while not other.switch_active_pokemon(other.active_pokemon_index):
-        if other.active_pokemon_index >= 6:
+        if other.active_pokemon_index >= len(other.pokemons) - 1:
           print("{} has no more pokemon available...{} wins!".format(other.name, self.name))
-          return
+          break
         other.active_pokemon_index += 1
